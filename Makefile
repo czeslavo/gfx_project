@@ -7,7 +7,7 @@ app: app/build
 	cd app/build && cmake .. && make run_app
 
 run_app: app
-	cd ./app/build/source && ./run_app
+	cd ./app/build/source && ./run_app &
 
 app/build:
 	mkdir app/build
