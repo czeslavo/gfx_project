@@ -11,13 +11,19 @@
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/string.h>
-#include <wx/stattext.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
 #include <wx/gdicmn.h>
+#include <wx/toolbar.h>
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/button.h>
+#include <wx/statusbr.h>
+#include <wx/filepicker.h>
 #include <wx/sizer.h>
+#include <wx/scrolwin.h>
+#include <wx/panel.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -31,16 +37,22 @@ class MainFrame : public wxFrame
 	private:
 	
 	protected:
-		wxStaticText* m_staticText1;
-		wxButton* m_button1;
-		
-		// Virtual event handlers, overide them in your derived class
-		virtual void onExitButtonClick( wxCommandEvent& event ) { event.Skip(); }
-		
+		wxToolBar* toolBar;
+		wxToolBarToolBase* newComparisonButton; 
+		wxToolBarToolBase* diffButton; 
+		wxToolBarToolBase* cropButton; 
+		wxToolBarToolBase* batchButton; 
+		wxStatusBar* statusBar;
+		wxFilePickerCtrl* m_filePicker2;
+		wxFilePickerCtrl* m_filePicker21;
+		wxScrolledWindow* m_scrolledWindow1;
+		wxScrolledWindow* m_scrolledWindow2;
+		wxPanel* m_panel7;
+		wxPanel* m_panel8;
 	
 	public:
 		
-		MainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Window example"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MainFrame( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Images comparer"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 814,583 ), long style = wxDEFAULT_FRAME_STYLE|wxRESIZE_BORDER|wxTAB_TRAVERSAL );
 		
 		~MainFrame();
 	
