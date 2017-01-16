@@ -17,6 +17,6 @@ make
 ```
 
 ## More targets 
-```   
+```
 make list_targets
 ```

@@ -7,11 +7,11 @@ app: app/build
 	cd app/build && cmake .. && make run_app
 
 run_app: app
-	./app/build/source/run_app
-    
+	cd ./app/build/source && ./run_app
+
 app/build:
 	mkdir app/build
-	
+
 compile: app/build
 	cd app/build && cmake .. && make
 
@@ -23,7 +23,7 @@ clean: app/build
 
 deep-clean: app/build
 	rm -rf app/build
-   
+
 list_targets:
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make database/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$' | xargs
 
