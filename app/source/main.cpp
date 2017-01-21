@@ -1,13 +1,13 @@
 #include "wx/wx.h"
 #include <memory>
 
-#include "MainFrame.h"
+#include "GuiBaseComponents.h"
 
 class App : public wxApp
 {
     bool OnInit();
 
-    MainFrame* mainFrame;
+    gui::ImagesComparerFrameBase* mainFrame;
 };
 
 IMPLEMENT_APP(App)
@@ -15,7 +15,7 @@ IMPLEMENT_APP(App)
 
 bool App::OnInit()
 {
-    mainFrame = new MainFrame{nullptr};
+    mainFrame = new gui::ImagesComparerFrameBase{nullptr};
     mainFrame->Show();
 
     return true;

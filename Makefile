@@ -4,7 +4,7 @@ install_dependencies:
 	cd ./scripts && ./install_all.sh
 
 app: app/build
-	cd app/build && cmake .. && make run_app
+	cd app/build && cmake DCMAKE_CXX_COMPILER=gcc-5 .. && make run_app
 
 run_app: app
 	cd ./app/build/source && ./run_app &
