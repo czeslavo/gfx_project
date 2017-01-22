@@ -6,18 +6,10 @@
 namespace core
 {
 
-enum class ImageFileType
-{
-    PNG,
-    JPEG,
-    TIFF,
-    BMP
-};
-
 class ImageService
 {
 public:
-    void loadImageFromFile(const std::string& path, ImageFileType fileType);
+    void loadImageFromFile(const std::string& path);
 
 private:
     bool isImageLoaded{false};

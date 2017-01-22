@@ -14,6 +14,12 @@ public:
     ImageComparerFrame(wxWindow* parent);
 
 private:
+    void registerEventHandlers();
+    void registerFilePickersEventHandlers();
+
+    void handleLeftFilePickerChange(wxFileDirPickerEvent& event);
+    void handleRightFilePickerChange(wxFileDirPickerEvent& event);
+
     std::unique_ptr<core::CompareController> compareController{nullptr};
 
 };

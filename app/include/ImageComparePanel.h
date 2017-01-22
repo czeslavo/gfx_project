@@ -15,6 +15,8 @@ public:
     void registerImageService(std::shared_ptr<core::ImageService> service);
 
 private:
+    void registerEventHandlers();
+
     std::shared_ptr<core::ImageService> imageService;
 };
 
