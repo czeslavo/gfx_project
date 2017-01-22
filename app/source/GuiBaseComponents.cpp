@@ -46,7 +46,12 @@ ImagesComparerFrameBase::ImagesComparerFrameBase( wxWindow* parent, wxWindowID i
 	wxBoxSizer* bSizer8;
 	bSizer8 = new wxBoxSizer( wxVERTICAL );
 
-	leftFilePicker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Select an image"), wxT("*.*"), wxDefaultPosition, wxSize( 300,-1 ), wxFLP_DEFAULT_STYLE|wxFLP_FILE_MUST_EXIST|wxFLP_OPEN|wxFLP_USE_TEXTCTRL );
+    const std::string pickersWildcard{"PNG, JPEG, TIFF or BMP files \
+        (*.png;*.PNG;*.jpeg;*.jpg;*.JPG;*.JPEG;*.tiff;*.TIFF;*.bmp;*.BMP)| \
+        *.png;*.jpeg;*.tiff;*.bmp"};
+
+	leftFilePicker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Select an image"), pickersWildcard,
+    wxDefaultPosition, wxSize( 300,-1 ), wxFLP_DEFAULT_STYLE|wxFLP_FILE_MUST_EXIST|wxFLP_OPEN );
 	leftFilePicker->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOW ) );
 
 	bSizer8->Add( leftFilePicker, 0, wxALL|wxEXPAND, 5 );
@@ -57,7 +62,8 @@ ImagesComparerFrameBase::ImagesComparerFrameBase( wxWindow* parent, wxWindowID i
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
 
-	rightFilePicker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Select an image"), wxT("*.*"), wxDefaultPosition, wxSize( 300,-1 ), wxFLP_DEFAULT_STYLE|wxFLP_FILE_MUST_EXIST|wxFLP_OPEN|wxFLP_USE_TEXTCTRL );
+	rightFilePicker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Select an image"), pickersWildcard,
+    wxDefaultPosition, wxSize( 300,-1 ), wxFLP_DEFAULT_STYLE|wxFLP_FILE_MUST_EXIST|wxFLP_OPEN );
 	rightFilePicker->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOW ) );
 
 	bSizer11->Add( rightFilePicker, 0, wxALL|wxEXPAND, 5 );
