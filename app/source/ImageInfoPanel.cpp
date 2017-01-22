@@ -8,4 +8,9 @@ ImageInfoPanel::ImageInfoPanel(wxWindow* parent)
 {
 }
 
+void ImageInfoPanel::registerImageService(std::shared_ptr<core::ImageService> service)
+{
+    imageService = service;
+}
+
 }

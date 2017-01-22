@@ -28,12 +28,17 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 
+#include "ImageComparePanel.h"
+#include "ImageInfoPanel.h"
 ///////////////////////////////////////////////////////////////////////////
 
 namespace gui
 {
-    class ImageComparePanel;
-    class ImageInfoPanel;
+
+	///////////////////////////////////////////////////////////////////////////////
+	/// Class ImageInfoPanelBase
+	///////////////////////////////////////////////////////////////////////////////
+
 
 	///////////////////////////////////////////////////////////////////////////////
 	/// Class ImagesComparerFrameBase
@@ -64,25 +69,6 @@ namespace gui
 
 	};
 
-	///////////////////////////////////////////////////////////////////////////////
-	/// Class ImageInfoPanelBase
-	///////////////////////////////////////////////////////////////////////////////
-	class ImageInfoPanelBase : public wxPanel
-	{
-		private:
-
-		protected:
-			wxStaticText* zoomLabel;
-			wxTextCtrl* zoomText;
-			wxStaticText* sizeLabel;
-			wxStaticText* sizeText;
-
-		public:
-
-			ImageInfoPanelBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxTAB_TRAVERSAL );
-			~ImageInfoPanelBase();
-
-	};
 
 } // namespace gui
 

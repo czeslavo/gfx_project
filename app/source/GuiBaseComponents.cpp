@@ -49,7 +49,7 @@ ImagesComparerFrameBase::ImagesComparerFrameBase( wxWindow* parent, wxWindowID i
 	leftFilePicker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Select an image"), wxT("*.*"), wxDefaultPosition, wxSize( 300,-1 ), wxFLP_DEFAULT_STYLE|wxFLP_FILE_MUST_EXIST|wxFLP_OPEN|wxFLP_USE_TEXTCTRL );
 	leftFilePicker->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOW ) );
 
-	bSizer8->Add( leftFilePicker, 0, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
+	bSizer8->Add( leftFilePicker, 0, wxALL|wxEXPAND, 5 );
 
 
 	bSizer3->Add( bSizer8, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
@@ -60,7 +60,7 @@ ImagesComparerFrameBase::ImagesComparerFrameBase( wxWindow* parent, wxWindowID i
 	rightFilePicker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Select an image"), wxT("*.*"), wxDefaultPosition, wxSize( 300,-1 ), wxFLP_DEFAULT_STYLE|wxFLP_FILE_MUST_EXIST|wxFLP_OPEN|wxFLP_USE_TEXTCTRL );
 	rightFilePicker->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOW ) );
 
-	bSizer11->Add( rightFilePicker, 0, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
+	bSizer11->Add( rightFilePicker, 0, wxALL|wxEXPAND, 5 );
 
 
 	bSizer3->Add( bSizer11, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
