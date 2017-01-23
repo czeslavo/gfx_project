@@ -11,8 +11,16 @@ ImageComparerFrame::ImageComparerFrame(wxWindow* parent)
     auto firstImageService = std::make_shared<core::ImageService>();
     auto secondImageService = std::make_shared<core::ImageService>();
 
+    auto sharedData = std::make_shared<core::SharedData>();
+
+    leftImagePanel->registerSecondPanel(rightImagePanel);
+    rightImagePanel->registerSecondPanel(leftImagePanel);
+
     leftImagePanel->registerImageService(firstImageService);
     rightImagePanel->registerImageService(secondImageService);
+
+    leftImagePanel->registerSharedData(sharedData);
+    rightImagePanel->registerSharedData(sharedData);
 
     leftPanel->registerImageService(firstImageService);
     rightPanel->registerImageService(secondImageService);

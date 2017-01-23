@@ -3,6 +3,7 @@
 #include <wx/wx.h>
 
 #include "ImageService.h"
+#include "SharedData.h"
 
 namespace gui
 {
@@ -21,21 +22,15 @@ public:
     void onEndDragging(wxMouseEvent& event);
 
     void registerImageService(std::shared_ptr<core::ImageService> service);
+    void registerSharedData(std::shared_ptr<core::SharedData> data);
+    void registerSecondPanel(wxWindow* panel);
 
 private:
     void registerEventHandlers();
+    void sendPaintEventToSecondPanel();
 
-    struct {
-        bool dragging{false};
-        int x0;
-        int y0;
-    } dragInfo;
-
-    struct {
-        int x;
-        int y;
-    } imagePosition;
-
+    wxWindow* secondPanel;
+    std::shared_ptr<core::SharedData> sharedData;
     std::shared_ptr<core::ImageService> imageService;
 };
 

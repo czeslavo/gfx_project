@@ -41,34 +41,40 @@ void ImageComparePanel::draw(wxDC& dc)
     if (not bitmap.IsOk())
         return;
 
-    dc.DrawBitmap(bitmap, imagePosition.x, imagePosition.y);
+    dc.DrawBitmap(bitmap, sharedData->imageInfo.x, sharedData->imageInfo.y);
 }
 
 void ImageComparePanel::onStartDragging(wxMouseEvent& event)
 {
-    if (not dragInfo.dragging)
+    if (not sharedData->dragInfo.dragging)
     {
-        dragInfo.dragging = true;
-        dragInfo.x0 = imagePosition.x + event.GetX();
-        dragInfo.y0 = imagePosition.y + event.GetY();
+        sharedData->dragInfo.dragging = true;
+        sharedData->dragInfo.x0 = sharedData->imageInfo.x + event.GetX();
+        sharedData->dragInfo.y0 = sharedData->imageInfo.y + event.GetY();
     }
 }
 
 void ImageComparePanel::onDrag(wxMouseEvent& event)
 {
-    if (not (event.LeftIsDown() and dragInfo.dragging))
+    if (not (event.LeftIsDown() and sharedData->dragInfo.dragging))
         return;
 
-    imagePosition.x = dragInfo.x0 - event.GetX();
-    imagePosition.y = dragInfo.y0 - event.GetY();
+    sharedData->imageInfo.x = sharedData->dragInfo.x0 - event.GetX();
+    sharedData->imageInfo.y = sharedData->dragInfo.y0 - event.GetY();
 
     paintNow();
+    sendPaintEventToSecondPanel();
+}
+
+void ImageComparePanel::sendPaintEventToSecondPanel()
+{
+    wxPaintEvent event;
+    wxPostEvent(secondPanel, event);
 }
 
 void ImageComparePanel::onEndDragging(wxMouseEvent& event)
 {
-    dragInfo.dragging = false;
-
+    sharedData->dragInfo.dragging = false;
 }
 
 void ImageComparePanel::registerImageService(std::shared_ptr<core::ImageService> service)
@@ -76,6 +82,14 @@ void ImageComparePanel::registerImageService(std::shared_ptr<core::ImageService>
     imageService = service;
 }
 
+void ImageComparePanel::registerSharedData(std::shared_ptr<core::SharedData> data)
+{
+    sharedData = data;
+}
 
+void ImageComparePanel::registerSecondPanel(wxWindow* panel)
+{
+    secondPanel = panel;
+}
 
 }
