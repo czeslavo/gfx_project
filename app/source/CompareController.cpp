@@ -40,16 +40,41 @@ void CompareController::handleLoadingFile(const std::string& filename, ImageIden
     switch (imageIdentity)
     {
         case ImageIdentity::LEFT:
-            imageServices.first->loadImageFromFile(filename);
-            return;
-
+            return handleLoadingFile(filename, imageServices.first);
         case ImageIdentity::RIGHT:
-            imageServices.second->loadImageFromFile(filename);
-            return;
-
+            return handleLoadingFile(filename, imageServices.second);
         default:
             return;
     }
+}
+
+void CompareController::handleLoadingFile(const std::string& filename, std::shared_ptr<ImageService> service)
+{
+    return sharedData->masterInfo.isAlive ?
+        handleLoadingFileAsSlave(filename, service) :
+        handleLoadingFileAsMaster(filename, service);
+}
+
+void CompareController::handleLoadingFileAsMaster(const std::string& filename,
+                                                  std::shared_ptr<ImageService> service)
+{
+    service->makeMaster();
+    service->loadImageFromFileAsMaster(filename);
+
+    const auto masterSize = service->getOriginalSize();
+
+    sharedData->masterInfo.isAlive = true;
+    sharedData->masterInfo.width = masterSize.first;
+    sharedData->masterInfo.height = masterSize.second;
+}
+
+void CompareController::handleLoadingFileAsSlave(const std::string& filename,
+                                                 std::shared_ptr<ImageService> service)
+{
+    const auto masterSize = std::make_pair(sharedData->masterInfo.width,
+                                           sharedData->masterInfo.height);
+
+    service->loadImageFromFileAsSlave(filename, masterSize);
 }
 
 void CompareController::handleMouseOnStartDragging(wxMouseEvent& e)

@@ -3,12 +3,44 @@
 namespace core
 {
 
-void ImageService::loadImageFromFile(const std::string& path)
+void ImageService::loadImageFromFileAsMaster(const std::string& path)
 {
     originalImage.LoadFile(path);
     isImageLoaded = originalImage.IsOk();
 
     resetProcessed();
+}
+
+void ImageService::loadImageFromFileAsSlave(const std::string& path,
+                                            const std::pair<int, int> masterSize)
+{
+    originalImage.LoadFile(path);
+
+    if (not hasTheSameAspectRatio(masterSize))
+    {
+        originalImage = wxImage();
+        return;
+    }
+
+    scaleToSize(masterSize);
+
+    isImageLoaded = originalImage.IsOk();
+    resetProcessed();
+}
+
+bool ImageService::hasTheSameAspectRatio(const std::pair<int, int> size)
+{
+    const float width = originalImage.GetWidth();
+    const float height = originalImage.GetHeight();
+
+    constexpr float epsilon{0.001};
+    return static_cast<float>(size.first) / static_cast<float>(size.second) -
+           width / height <= epsilon;
+}
+
+void ImageService::scaleToSize(const std::pair<int, int> size)
+{
+    originalImage.Rescale(size.first, size.second);
 }
 
 wxBitmap ImageService::getProcessedBitmap() const
@@ -80,6 +112,11 @@ void ImageService::setZoom(int zoom)
 {
     this->zoom = zoom;
     scale(zoom);
+}
+
+void ImageService::makeMaster()
+{
+    isMaster = true;
 }
 
 }

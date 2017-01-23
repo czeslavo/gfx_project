@@ -64,7 +64,7 @@ void ImageComparerFrame::registerMenuHandlers()
 {
     using namespace core;
     toolBar->Bind(wxEVT_COMMAND_TOOL_CLICKED, &CompareController::startNewComparison, compareController.get(),
-    NEW_COMPARISON_ID);
+        NEW_COMPARISON_ID);
 }
 
 void ImageComparerFrame::handleLeftFilePickerChange(wxFileDirPickerEvent& event)
@@ -78,7 +78,5 @@ void ImageComparerFrame::handleRightFilePickerChange(wxFileDirPickerEvent& event
     using namespace core;
     compareController->handleLoadingFile(event.GetPath().ToStdString(), ImageIdentity::RIGHT);
 }
-
-
 
 }
