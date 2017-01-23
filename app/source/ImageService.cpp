@@ -6,6 +6,9 @@ namespace core
 void ImageService::loadImageFromFileAsMaster(const std::string& path)
 {
     originalImage.LoadFile(path);
+    initialSize.width = originalImage.GetWidth();
+    initialSize.height = originalImage.GetHeight();
+
     isImageLoaded = originalImage.IsOk();
 
     resetProcessed();
@@ -15,6 +18,8 @@ void ImageService::loadImageFromFileAsSlave(const std::string& path,
                                             const std::pair<int, int> masterSize)
 {
     originalImage.LoadFile(path);
+    initialSize.width = originalImage.GetWidth();
+    initialSize.height = originalImage.GetHeight();
 
     if (not hasTheSameAspectRatio(masterSize))
     {
@@ -73,12 +78,26 @@ std::pair<int, int> ImageService::getOriginalSize() const
     };
 }
 
+std::pair<int, int> ImageService::getInitialSize() const
+{
+    return std::make_pair(initialSize.width, initialSize.height);
+}
+
 int ImageService::getZoom() const
 {
     if (not isImageLoaded)
         return 0;
 
     return zoom;
+}
+
+int ImageService::getInitialZoom() const
+{
+    if (not isImageLoaded)
+        return 0;
+
+    constexpr float percent{100.f};
+    return static_cast<float>(processedImage.GetWidth()) / static_cast<float>(initialSize.width) * percent;
 }
 
 void ImageService::resetProcessed()

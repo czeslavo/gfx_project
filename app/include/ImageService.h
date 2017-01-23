@@ -15,8 +15,10 @@ public:
     wxBitmap getProcessedBitmap() const;
     wxBitmap getOriginalBitmap() const;
     std::pair<int, int> getOriginalSize() const;
+    std::pair<int, int> getInitialSize() const;
 
     int getZoom() const;
+    int getInitialZoom() const;
     void setZoom(int zoom);
     void resetProcessed();
     void reset();
@@ -32,6 +34,11 @@ private:
 
     bool isImageLoaded{false};
     int zoom{100};
+
+    struct {
+        int width;
+        int height;
+    } initialSize;
 
     bool isMaster{false};
 
