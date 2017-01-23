@@ -21,17 +21,9 @@ public:
     void paintNow();
     void draw(wxDC& dc);
 
-    void onStartDragging(wxMouseEvent& event);
-    void onDrag(wxMouseEvent& event);
-    void onEndDragging(wxMouseEvent& event);
-
-    void onMouseScroll(wxMouseEvent& event);
-
 private:
     void registerEventHandlers();
-    void sendPaintEventToSecondPanel();
 
-    wxWindow* secondPanel;
     std::shared_ptr<core::SharedData> sharedData;
     std::shared_ptr<core::ImageService> imageService;
 };

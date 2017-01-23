@@ -62,7 +62,7 @@ void ImageService::resetProcessed()
 
 void ImageService::scale(int zoom)
 {
-    const auto size = processedImage.GetSize();
+    const auto size = originalImage.GetSize();
 
     constexpr float percent{100.f};
     const float factor = static_cast<float>(zoom) / percent;
