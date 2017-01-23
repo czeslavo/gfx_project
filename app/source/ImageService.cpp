@@ -110,6 +110,9 @@ void ImageService::scale(int zoom)
 
 void ImageService::setZoom(int zoom)
 {
+    if (not isImageLoaded)
+        return;
+
     this->zoom = zoom;
     scale(zoom);
 }
