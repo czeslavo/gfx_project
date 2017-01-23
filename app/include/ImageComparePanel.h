@@ -13,6 +13,10 @@ class ImageComparePanel : public wxPanel
 public:
     ImageComparePanel(wxWindow* parent);
 
+    void registerImageService(std::shared_ptr<core::ImageService> service);
+    void registerSharedData(std::shared_ptr<core::SharedData> data);
+    void registerSecondPanel(wxWindow* panel);
+
     void onPaint(wxPaintEvent& event);
     void paintNow();
     void draw(wxDC& dc);
@@ -21,9 +25,7 @@ public:
     void onDrag(wxMouseEvent& event);
     void onEndDragging(wxMouseEvent& event);
 
-    void registerImageService(std::shared_ptr<core::ImageService> service);
-    void registerSharedData(std::shared_ptr<core::SharedData> data);
-    void registerSecondPanel(wxWindow* panel);
+    void onMouseScroll(wxMouseEvent& event);
 
 private:
     void registerEventHandlers();

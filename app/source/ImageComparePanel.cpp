@@ -1,6 +1,7 @@
 #include <wx/dcbuffer.h>
 
 #include "ImageComparePanel.h"
+#include <iostream>
 
 namespace gui
 {
@@ -18,6 +19,23 @@ void ImageComparePanel::registerEventHandlers()
     Bind(wxEVT_LEFT_DOWN, &ImageComparePanel::onStartDragging, this);
     Bind(wxEVT_MOTION, &ImageComparePanel::onDrag, this);
     Bind(wxEVT_LEFT_UP, &ImageComparePanel::onEndDragging, this);
+
+    Bind(wxEVT_MOUSEWHEEL, &ImageComparePanel::onMouseScroll, this);
+}
+
+void ImageComparePanel::registerImageService(std::shared_ptr<core::ImageService> service)
+{
+    imageService = service;
+}
+
+void ImageComparePanel::registerSharedData(std::shared_ptr<core::SharedData> data)
+{
+    sharedData = data;
+}
+
+void ImageComparePanel::registerSecondPanel(wxWindow* panel)
+{
+    secondPanel = panel;
 }
 
 void ImageComparePanel::onPaint(wxPaintEvent& event)
@@ -77,19 +95,13 @@ void ImageComparePanel::onEndDragging(wxMouseEvent& event)
     sharedData->dragInfo.dragging = false;
 }
 
-void ImageComparePanel::registerImageService(std::shared_ptr<core::ImageService> service)
+void ImageComparePanel::onMouseScroll(wxMouseEvent& event)
 {
-    imageService = service;
-}
+    const int imageZoom = imageService->getZoom() + 1;
+    sharedData->imageInfo.zoom = imageZoom;
 
-void ImageComparePanel::registerSharedData(std::shared_ptr<core::SharedData> data)
-{
-    sharedData = data;
-}
-
-void ImageComparePanel::registerSecondPanel(wxWindow* panel)
-{
-    secondPanel = panel;
+    imageService->setZoom(imageZoom);
+    paintNow();
 }
 
 }

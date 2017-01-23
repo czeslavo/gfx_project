@@ -5,15 +5,8 @@ namespace core
 
 void ImageService::loadImageFromFile(const std::string& path)
 {
-    try
-    {
-        originalImage = std::make_shared<wxImage>(path);
-    }
-    catch (const std::exception& e)
-    {
-
-    }
-    isImageLoaded = originalImage->IsOk();
+    originalImage.LoadFile(path);
+    isImageLoaded = originalImage.IsOk();
 
     resetProcessed();
 }
@@ -28,12 +21,12 @@ wxBitmap ImageService::getOriginalBitmap() const
     return getBitmap(originalImage);
 }
 
-wxBitmap ImageService::getBitmap(std::shared_ptr<wxImage> image) const
+wxBitmap ImageService::getBitmap(const wxImage& image) const
 {
     if (not isImageLoaded)
         return wxBitmap();
 
-    return wxBitmap(*image);
+    return wxBitmap(image);
 }
 
 
@@ -43,8 +36,8 @@ std::pair<int, int> ImageService::getOriginalSize() const
         return {0, 0};
 
     return {
-        originalImage->GetWidth(),
-        originalImage->GetHeight()
+        originalImage.GetWidth(),
+        originalImage.GetHeight()
     };
 }
 
@@ -53,18 +46,33 @@ int ImageService::getZoom() const
     if (not isImageLoaded)
         return 0;
 
-    return originalImage->GetWidth() / processedImage->GetWidth();
+    return zoom;
 }
 
 void ImageService::resetProcessed()
 {
     if (not isImageLoaded)
     {
-        processedImage = std::make_shared<wxImage>();
+        processedImage = wxImage();
         return;
     }
 
-    processedImage = std::make_shared<wxImage>(originalImage->Copy());
+    processedImage = originalImage.Copy();
+}
+
+void ImageService::scale(int zoom)
+{
+    const auto size = processedImage.GetSize();
+
+    constexpr float percent{100.f};
+    const float factor = static_cast<float>(zoom) / percent;
+    processedImage = originalImage.Scale(static_cast<float>(size.x) * factor, static_cast<float>(size.y) * factor);
+}
+
+void ImageService::setZoom(int zoom)
+{
+    this->zoom = zoom;
+    scale(zoom);
 }
 
 }

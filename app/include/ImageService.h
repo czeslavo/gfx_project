@@ -16,16 +16,19 @@ public:
 
     std::pair<int, int> getOriginalSize() const;
     int getZoom() const;
+    void setZoom(int zoom);
     void resetProcessed();
 
+    void scale(int zoom);
 
 private:
-    wxBitmap getBitmap(std::shared_ptr<wxImage> image) const;
+    wxBitmap getBitmap(const wxImage& image) const;
 
     bool isImageLoaded{false};
+    int zoom{100};
 
-    std::shared_ptr<wxImage> originalImage{nullptr};
-    std::shared_ptr<wxImage> processedImage{nullptr};
+    wxImage originalImage{};
+    wxImage processedImage{};
 };
 
 }
