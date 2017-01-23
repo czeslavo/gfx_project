@@ -5,6 +5,8 @@ namespace core
 
 struct SharedData
 {
+    void reset();
+
     struct {
         bool dragging{false};
         int x0{0};
@@ -19,8 +21,8 @@ struct SharedData
 
     struct {
         bool isAlive{false};
-        int width;
-        int height;
+        int width{0};
+        int height{0};
     } masterInfo;
 };
 

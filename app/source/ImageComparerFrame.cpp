@@ -36,6 +36,7 @@ void ImageComparerFrame::registerEventHandlers()
 {
     registerFilePickersEventHandlers();
     registerImagePanelsHandlers();
+    registerMenuHandlers();
 }
 
 void ImageComparerFrame::registerFilePickersEventHandlers()
@@ -57,6 +58,13 @@ void ImageComparerFrame::registerImagePanelsHandlers()
     rightImagePanel->Bind(wxEVT_MOTION, &CompareController::handleMouseOnDrag, compareController.get());
     rightImagePanel->Bind(wxEVT_LEFT_UP, &CompareController::handleMouseOnEndDragging, compareController.get());
     rightImagePanel->Bind(wxEVT_MOUSEWHEEL, &CompareController::handleMouseOnScroll, compareController.get());
+}
+
+void ImageComparerFrame::registerMenuHandlers()
+{
+    using namespace core;
+    toolBar->Bind(wxEVT_COMMAND_TOOL_CLICKED, &CompareController::startNewComparison, compareController.get(),
+    NEW_COMPARISON_ID);
 }
 
 void ImageComparerFrame::handleLeftFilePickerChange(wxFileDirPickerEvent& event)

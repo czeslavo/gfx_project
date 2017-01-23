@@ -18,6 +18,7 @@ public:
     int getZoom() const;
     void setZoom(int zoom);
     void resetProcessed();
+    void reset();
 
     void scale(int zoom);
 

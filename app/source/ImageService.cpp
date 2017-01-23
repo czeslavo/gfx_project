@@ -60,6 +60,13 @@ void ImageService::resetProcessed()
     processedImage = originalImage.Copy();
 }
 
+void ImageService::reset()
+{
+    originalImage = wxImage();
+    processedImage = wxImage();
+    isImageLoaded = false;
+}
+
 void ImageService::scale(int zoom)
 {
     const auto size = originalImage.GetSize();

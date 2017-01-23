@@ -24,6 +24,17 @@ void CompareController::registerSharedData(std::shared_ptr<SharedData> data)
     sharedData = data;
 }
 
+void CompareController::startNewComparison(wxCommandEvent& e)
+{
+    for (auto service : {imageServices.first, imageServices.second})
+        service->reset();
+
+    sharedData->reset();
+
+    for (auto panel : {imagePanels.first, imagePanels.second})
+        panel->paintNow();
+}
+
 void CompareController::handleLoadingFile(const std::string& filename, ImageIdentity imageIdentity)
 {
     switch (imageIdentity)

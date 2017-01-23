@@ -21,6 +21,7 @@ public:
     void registerSharedData(std::shared_ptr<SharedData> data);
     void registerInfoPanels(gui::ImageInfoPanel* first, gui::ImageInfoPanel* second);
 
+    void startNewComparison(wxCommandEvent& e);
     void handleLoadingFile(const std::string& filename, ImageIdentity imageIdentity);
 
     void handleMouseOnStartDragging(wxMouseEvent& e);

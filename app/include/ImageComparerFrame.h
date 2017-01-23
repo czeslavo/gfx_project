@@ -17,6 +17,7 @@ private:
     void registerEventHandlers();
     void registerFilePickersEventHandlers();
     void registerImagePanelsHandlers();
+    void registerMenuHandlers();
 
     void handleLeftFilePickerChange(wxFileDirPickerEvent& event);
     void handleRightFilePickerChange(wxFileDirPickerEvent& event);
