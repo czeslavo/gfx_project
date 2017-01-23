@@ -26,7 +26,7 @@ ImageComparerFrame::ImageComparerFrame(wxWindow* parent)
     compareController->registerImageServices(firstImageService, secondImageService);
     compareController->registerImagePanels(leftImagePanel, rightImagePanel);
     compareController->registerSharedData(sharedData);
-
+    compareController->registerInfoPanels(leftPanel, rightPanel);
 
     wxInitAllImageHandlers();
     registerEventHandlers();

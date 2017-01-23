@@ -14,6 +14,10 @@ void CompareController::registerImagePanels(gui::ImageComparePanel* first, gui::
     imagePanels = std::make_pair(first, second);
 }
 
+void CompareController::registerInfoPanels(gui::ImageInfoPanel* first, gui::ImageInfoPanel* second)
+{
+    imageInfoPanels = std::make_pair(first, second);
+}
 
 void CompareController::registerSharedData(std::shared_ptr<SharedData> data)
 {

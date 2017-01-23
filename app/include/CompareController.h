@@ -6,6 +6,7 @@
 #include "SharedData.h"
 #include "ImageComparePanel.h"
 #include "ImageService.h"
+#include "ImageInfoPanel.h"
 
 enum class ImageIdentity { LEFT, RIGHT };
 
@@ -18,6 +19,7 @@ public:
     void registerImageServices(std::shared_ptr<ImageService> first, std::shared_ptr<ImageService> second);
     void registerImagePanels(gui::ImageComparePanel* first, gui::ImageComparePanel* second);
     void registerSharedData(std::shared_ptr<SharedData> data);
+    void registerInfoPanels(gui::ImageInfoPanel* first, gui::ImageInfoPanel* second);
 
     void handleLoadingFile(const std::string& filename, ImageIdentity imageIdentity);
 
@@ -30,7 +32,7 @@ private:
     std::shared_ptr<SharedData> sharedData;
     std::pair<std::shared_ptr<ImageService>, std::shared_ptr<ImageService>> imageServices;
     std::pair<gui::ImageComparePanel*, gui::ImageComparePanel*> imagePanels;
-
+    std::pair<gui::ImageInfoPanel*, gui::ImageInfoPanel*> imageInfoPanels;
 
 };
 
