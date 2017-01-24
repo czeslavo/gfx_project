@@ -67,7 +67,8 @@ void ImageComparePanel::drawCropRectangle(wxDC& dc)
     dc.SetPen(pen);
 
     dc.DrawRectangle(sharedData->cropData.x0, sharedData->cropData.y0,
-                     sharedData->cropData.x, sharedData->cropData.y);
+                     sharedData->cropData.x - sharedData->cropData.x0,
+                     sharedData->cropData.y - sharedData->cropData.y0);
 }
 
 }

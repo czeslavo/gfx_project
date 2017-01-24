@@ -45,6 +45,7 @@ private:
     void saveCroppedToFile();
     void drawCropped(wxDC& dc);
     wxRect getCropRectangle();
+    wxRect fitRectangleToSize(const wxRect& rect, const wxSize& size);
     void saveBitmapToFile(const wxString& path, wxBitmap bitmap);
 
     std::shared_ptr<SharedData> sharedData;

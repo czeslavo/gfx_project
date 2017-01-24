@@ -156,8 +156,8 @@ void CompareController::handleMouseOnStartDraggingCrop(wxMouseEvent& e)
 
 void CompareController::handleMouseOnDragCrop(wxMouseEvent& e)
 {
-    sharedData->cropData.x = e.GetX() - sharedData->cropData.x0;
-    sharedData->cropData.y = e.GetY() - sharedData->cropData.y0;
+    sharedData->cropData.x = e.GetX();
+    sharedData->cropData.y = e.GetY();
 
     for (auto panel : {imagePanels.first, imagePanels.second})
         panel->paintNow();
@@ -176,9 +176,11 @@ void CompareController::handleMouseOnEndDraggingCrop(wxMouseEvent& e)
 
 void CompareController::saveCroppedToFile()
 {
+    const auto rect = fitRectangleToSize(getCropRectangle(), imageServices.first->getOriginalBitmap().GetSize());
+
     auto bitmap = wxBitmap(
-        std::abs(sharedData->cropData.x - sharedData->cropData.x0) * 2,
-        std::abs(sharedData->cropData.y - sharedData->cropData.y0) * 2
+        rect.GetWidth() * 2,
+        rect.GetHeight()
     );
 
     wxMemoryDC memoryContext;
@@ -208,12 +210,13 @@ void CompareController::drawCropped(wxDC& dc)
     auto second = imageServices.second->getOriginalBitmap();
 
     auto cropRectangle = getCropRectangle();
+    auto fittedRectangle = fitRectangleToSize(cropRectangle, first.GetSize());
 
-    auto firstCropped = first.GetSubBitmap(cropRectangle);
-    auto secondCropped = second.GetSubBitmap(cropRectangle);
+    auto firstCropped = first.GetSubBitmap(fittedRectangle);
+    auto secondCropped = second.GetSubBitmap(fittedRectangle);
 
     dc.DrawBitmap(firstCropped, 0, 0);
-    dc.DrawBitmap(secondCropped, first.GetWidth(), 0);
+    dc.DrawBitmap(secondCropped, fittedRectangle.GetWidth(), 0);
 }
 
 wxRect CompareController::getCropRectangle()
@@ -221,11 +224,28 @@ wxRect CompareController::getCropRectangle()
     const float zoom = sharedData->imageInfo.zoom;
     const float coeff = 100.f / zoom;
 
-    return wxRect{
-        wxPoint{static_cast<int>(sharedData->cropData.x * coeff),  static_cast<int>(sharedData->cropData.y * coeff)},
-        wxPoint{static_cast<int>(sharedData->cropData.x0 * coeff), static_cast<int>(sharedData->cropData.y0 * coeff)}
+    int x1 = sharedData->cropData.x;
+    int x2 = sharedData->cropData.x0;
+    int y1 = sharedData->cropData.y;
+    int y2 = sharedData->cropData.y0;
+
+    return {
+        wxPoint{static_cast<int>(((x1 > x2 ? x2 : x1) - sharedData->imageInfo.x) * coeff),
+                static_cast<int>(((y1 > y2 ? y2 : y1) - sharedData->imageInfo.y) * coeff)},
+        wxPoint{static_cast<int>(((x1 > x2 ? x1 : x2) - sharedData->imageInfo.x) * coeff),
+                static_cast<int>(((y1 > y2 ? y1 : y2) - sharedData->imageInfo.y) * coeff)}
     };
 
+}
+
+wxRect CompareController::fitRectangleToSize(const wxRect& rect, const wxSize& size)
+{
+    return wxRect{
+        wxPoint{rect.GetLeft() < 0 ? 0 : rect.GetLeft(),
+                rect.GetTop() < 0 ? 0 : rect.GetTop()},
+        wxPoint{rect.GetRight() > size.GetWidth() ? size.GetWidth() - 1 : rect.GetRight(),
+                rect.GetBottom() > size.GetHeight() ? size.GetHeight() - 1 : rect.GetHeight()}
+    };
 }
 
 void CompareController::saveBitmapToFile(const wxString& path, wxBitmap bitmap)
