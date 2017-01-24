@@ -12,6 +12,7 @@ DiffFrame::DiffFrame(wxWindow* parent, wxImage firstImage, wxImage secondImage)
       secondImage(secondImage)
 {
     registerEventHandlers();
+    generateDiff();
 }
 
 void DiffFrame::registerEventHandlers()
@@ -22,7 +23,7 @@ void DiffFrame::registerEventHandlers()
 
 void DiffFrame::handleGenerateButtonClick(wxCommandEvent& event)
 {
-    //generateDiff();
+    generateDiff();
     paintNow();
 }
 
@@ -42,19 +43,19 @@ void DiffFrame::paintNow()
 
 void DiffFrame::draw(wxDC& dc)
 {
-    auto diff = getDiff();
-    auto bitmap = wxBitmap(diff);
     dc.Clear();
 
-    if (not bitmap.IsOk())
+    if (not isDiffReady())
         return;
+
+    auto bitmap = wxBitmap(diff);
 
     dc.DrawBitmap(bitmap, 0, 0);
 }
 
 bool DiffFrame::isDiffReady() const
 {
-   // return diff.IsOk();
+    return diff.IsOk();
 }
 
 bool DiffFrame::areImagesOk() const
@@ -62,17 +63,19 @@ bool DiffFrame::areImagesOk() const
     return firstImage.IsOk() and secondImage.IsOk();
 }
 
-wxImage DiffFrame::getDiff()
+void DiffFrame::generateDiff()
 {
     if (not areImagesOk())
     {
         statusBar->PushStatusText("Images aren't loaded yet.");
-        return wxImage();
+        return;
     }
 
     int threshold = tryGetThreshold();
+    const auto useImage = shouldUseImage();
+    const auto whichImage = whichImageShouldUse();
 
-    return diff::getImagesDiff(firstImage, secondImage, threshold,
+    diff = diff::getImagesDiff(firstImage, secondImage, threshold, useImage, whichImage,
         bgColorPicker->GetColour(), fgColorPicker->GetColour());
 }
 
@@ -86,6 +89,21 @@ int DiffFrame::tryGetThreshold(int threshold) const
     }
 
     return threshold;
+}
+
+bool DiffFrame::shouldUseImage() const
+{
+    return drawImageCheckBox->GetValue();
+}
+
+ImageIdentity DiffFrame::whichImageShouldUse() const
+{
+    if (drawFirstRadioButton->GetValue())
+        return ImageIdentity::LEFT;
+    if (drawSecondRadioButton->GetValue())
+        return ImageIdentity::RIGHT;
+
+    return ImageIdentity::NONE;
 }
 
 }

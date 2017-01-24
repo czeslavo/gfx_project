@@ -8,7 +8,7 @@
 #include "ImageService.h"
 #include "ImageInfoPanel.h"
 
-enum class ImageIdentity { LEFT, RIGHT };
+enum class ImageIdentity { LEFT, RIGHT, NONE };
 
 namespace core
 {

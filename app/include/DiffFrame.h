@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include "CompareController.h"
 #include "DiffFrameBase.h"
 
 namespace diff
@@ -23,12 +24,16 @@ private:
     bool isDiffReady() const;
     bool areImagesOk() const;
 
-    wxImage getDiff();
+    void generateDiff();
+
     int tryGetThreshold(int defaultThreshold = 100) const;
+    bool shouldUseImage() const;
+    ImageIdentity whichImageShouldUse() const;
 
 
     wxImage firstImage;
     wxImage secondImage;
+    wxImage diff;
 };
 
 }
