@@ -24,6 +24,8 @@ public:
 private:
     void registerEventHandlers();
 
+    void drawCropRectangle(wxDC& dc);
+
     std::shared_ptr<core::SharedData> sharedData;
     std::shared_ptr<core::ImageService> imageService;
 };

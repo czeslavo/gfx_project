@@ -23,6 +23,7 @@ public:
 
     void startNewComparison(wxCommandEvent& e);
     void openDiffGenerator(wxCommandEvent& e);
+    void startCropping(wxCommandEvent& e);
 
     void handleLoadingFile(const std::string& filename, ImageIdentity imageIdentity);
 
@@ -31,12 +32,20 @@ public:
     void handleMouseOnEndDragging(wxMouseEvent& e);
     void handleMouseOnScroll(wxMouseEvent& e);
 
+    void handleMouseOnStartDraggingCrop(wxMouseEvent& e);
+    void handleMouseOnDragCrop(wxMouseEvent& e);
+    void handleMouseOnEndDraggingCrop(wxMouseEvent& e);
+
 private:
     void handleLoadingFile(const std::string& filename, std::shared_ptr<ImageService> service);
     void handleLoadingFileAsMaster(const std::string& filename, std::shared_ptr<ImageService> service);
     void handleLoadingFileAsSlave(const std::string& filename, std::shared_ptr<ImageService> service);
 
     bool areBothImagesLoaded() const;
+    void saveCroppedToFile();
+    void drawCropped(wxDC& dc);
+    wxRect getCropRectangle();
+    void saveBitmapToFile(const wxString& path, wxBitmap bitmap);
 
     std::shared_ptr<SharedData> sharedData;
     std::pair<std::shared_ptr<ImageService>, std::shared_ptr<ImageService>> imageServices;

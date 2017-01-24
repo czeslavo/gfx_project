@@ -44,4 +44,5 @@ void ImageInfoPanel::setZoomText()
     zoomText->ChangeValue(zoom);
 }
 
+
 }

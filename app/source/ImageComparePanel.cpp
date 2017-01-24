@@ -50,6 +50,24 @@ void ImageComparePanel::draw(wxDC& dc)
         return;
 
     dc.DrawBitmap(bitmap, sharedData->imageInfo.x, sharedData->imageInfo.y);
+
+    if (sharedData->cropData.cropMode)
+        drawCropRectangle(dc);
+}
+
+void ImageComparePanel::drawCropRectangle(wxDC& dc)
+{
+    wxColour filling(0, 0, 0, 128);
+    wxColour outline(0, 0, 0, 180);
+
+    wxBrush brush(filling);
+    wxPen pen(outline);
+
+    dc.SetBrush(brush);
+    dc.SetPen(pen);
+
+    dc.DrawRectangle(sharedData->cropData.x0, sharedData->cropData.y0,
+                     sharedData->cropData.x, sharedData->cropData.y);
 }
 
 }

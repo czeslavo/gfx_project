@@ -53,6 +53,11 @@ void CompareController::openDiffGenerator(wxCommandEvent& e)
     diffFrame->Show();
 }
 
+void CompareController::startCropping(wxCommandEvent& e)
+{
+    sharedData->cropData.cropMode = true;
+}
+
 void CompareController::handleLoadingFile(const std::string& filename, ImageIdentity imageIdentity)
 {
     switch (imageIdentity)
@@ -97,6 +102,9 @@ void CompareController::handleLoadingFileAsSlave(const std::string& filename,
 
 void CompareController::handleMouseOnStartDragging(wxMouseEvent& e)
 {
+    if (sharedData->cropData.cropMode)
+        return handleMouseOnStartDraggingCrop(e);
+
     if (not sharedData->dragInfo.dragging)
     {
         sharedData->dragInfo.dragging = true;
@@ -107,6 +115,9 @@ void CompareController::handleMouseOnStartDragging(wxMouseEvent& e)
 
 void CompareController::handleMouseOnDrag(wxMouseEvent& e)
 {
+    if (e.LeftIsDown() and sharedData->cropData.startedCropping)
+        return handleMouseOnDragCrop(e);
+
     if (not (e.LeftIsDown() and sharedData->dragInfo.dragging))
         return;
 
@@ -119,6 +130,9 @@ void CompareController::handleMouseOnDrag(wxMouseEvent& e)
 
 void CompareController::handleMouseOnEndDragging(wxMouseEvent& e)
 {
+    if (sharedData->cropData.startedCropping)
+        return handleMouseOnEndDraggingCrop(e);
+
     sharedData->dragInfo.dragging = false;
 }
 
@@ -131,6 +145,112 @@ void CompareController::handleMouseOnScroll(wxMouseEvent& e)
 
     for (auto panel : {imagePanels.first, imagePanels.second})
         panel->paintNow();
+}
+
+void CompareController::handleMouseOnStartDraggingCrop(wxMouseEvent& e)
+{
+    sharedData->cropData.startedCropping = true;
+    sharedData->cropData.x0 = e.GetX();
+    sharedData->cropData.y0 = e.GetY();
+}
+
+void CompareController::handleMouseOnDragCrop(wxMouseEvent& e)
+{
+    sharedData->cropData.x = e.GetX() - sharedData->cropData.x0;
+    sharedData->cropData.y = e.GetY() - sharedData->cropData.y0;
+
+    for (auto panel : {imagePanels.first, imagePanels.second})
+        panel->paintNow();
+}
+
+void CompareController::handleMouseOnEndDraggingCrop(wxMouseEvent& e)
+{
+    sharedData->cropData.startedCropping = false;
+    sharedData->cropData.cropMode = false;
+
+    for (auto panel : {imagePanels.first, imagePanels.second})
+        panel->paintNow();
+
+    saveCroppedToFile();
+}
+
+void CompareController::saveCroppedToFile()
+{
+    auto bitmap = wxBitmap(
+        std::abs(sharedData->cropData.x - sharedData->cropData.x0) * 2,
+        std::abs(sharedData->cropData.y - sharedData->cropData.y0) * 2
+    );
+
+    wxMemoryDC memoryContext;
+
+    memoryContext.SelectObject(bitmap);
+    drawCropped(memoryContext);
+
+    memoryContext.SelectObject(wxNullBitmap);
+
+
+    const std::string filesWildcard{"PNG, JPEG, TIFF or BMP files \
+        (*.png;*.PNG;*.jpeg;*.jpg;*.JPG;*.JPEG;*.tiff;*.TIFF;*.bmp;*.BMP)| \
+        *.png;*.jpeg;*.tiff;*.bmp"};
+
+    wxFileDialog fileDialog{
+        imagePanels.first, "Save image", "", "", filesWildcard, wxFD_SAVE};
+
+    if (fileDialog.ShowModal() == wxID_CANCEL)
+        return;
+
+    saveBitmapToFile(fileDialog.GetPath(), bitmap);
+}
+
+void CompareController::drawCropped(wxDC& dc)
+{
+    auto first = imageServices.first->getOriginalBitmap();
+    auto second = imageServices.second->getOriginalBitmap();
+
+    auto cropRectangle = getCropRectangle();
+
+    auto firstCropped = first.GetSubBitmap(cropRectangle);
+    auto secondCropped = second.GetSubBitmap(cropRectangle);
+
+    dc.DrawBitmap(firstCropped, 0, 0);
+    dc.DrawBitmap(secondCropped, first.GetWidth(), 0);
+}
+
+wxRect CompareController::getCropRectangle()
+{
+    const float zoom = sharedData->imageInfo.zoom;
+    const float coeff = 100.f / zoom;
+
+    return wxRect{
+        wxPoint{static_cast<int>(sharedData->cropData.x * coeff),  static_cast<int>(sharedData->cropData.y * coeff)},
+        wxPoint{static_cast<int>(sharedData->cropData.x0 * coeff), static_cast<int>(sharedData->cropData.y0 * coeff)}
+    };
+
+}
+
+void CompareController::saveBitmapToFile(const wxString& path, wxBitmap bitmap)
+{
+    if (path.Matches("*.png") or path.Matches(".PNG"))
+    {
+        bitmap.SaveFile(path, wxBITMAP_TYPE_PNG);
+        return;
+    }
+    if (path.Matches("*.jpeg") or path.Matches("*.jpg") or path.Matches("*.JPEG") or
+        path.Matches("*.JPG"))
+    {
+        bitmap.SaveFile(path, wxBITMAP_TYPE_JPEG);
+        return;
+    }
+    if (path.Matches("*.tiff") or path.Matches("*.TIFF"))
+    {
+        bitmap.SaveFile(path, wxBITMAP_TYPE_TIFF);
+        return;
+    }
+    if (path.Matches("*.bmp") or path.Matches("*.BMP"))
+    {
+        bitmap.SaveFile(path, wxBITMAP_TYPE_BMP);
+        return;
+    }
 }
 
 bool CompareController::areBothImagesLoaded() const

@@ -24,6 +24,15 @@ struct SharedData
         int width{0};
         int height{0};
     } masterInfo;
+
+    struct {
+        bool cropMode{false};
+        bool startedCropping{false};
+        int x0;
+        int y0;
+        int x;
+        int y;
+    } cropData;
 };
 
 }
