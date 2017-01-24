@@ -58,7 +58,7 @@ DiffFrameBase::DiffFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	m_staticText111->Wrap( -1 );
 	bSizer261->Add( m_staticText111, 0, wxALL, 5 );
 
-	fgColorPicker = new wxColourPickerCtrl( this, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgColorPicker = new wxColourPickerCtrl( this, wxID_ANY, *wxRED, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	bSizer261->Add( fgColorPicker, 0, wxALL|wxEXPAND, 5 );
 
 

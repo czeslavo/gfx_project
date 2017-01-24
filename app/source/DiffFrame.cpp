@@ -2,6 +2,7 @@
 
 #include "DiffFrame.h"
 #include "DiffCalculator.h"
+#include "Helpers.h"
 
 namespace diff
 {
@@ -18,6 +19,8 @@ DiffFrame::DiffFrame(wxWindow* parent, wxImage firstImage, wxImage secondImage)
 void DiffFrame::registerEventHandlers()
 {
     Bind(wxEVT_BUTTON, &DiffFrame::handleGenerateButtonClick, this);
+    Bind(wxEVT_UPDATE_UI, &DiffFrame::handleUpdateUi, this);
+
     panel->Bind(wxEVT_PAINT, &DiffFrame::handleOnPaint, this);
 }
 
@@ -48,9 +51,41 @@ void DiffFrame::draw(wxDC& dc)
     if (not isDiffReady())
         return;
 
-    auto bitmap = wxBitmap(diff);
+    auto size = dc.GetSize();
+    auto bitmap = helpers::getFittedBitmap(diff, size);
+    auto centerPosition = helpers::getCenterPosition(size, bitmap.GetSize());
 
-    dc.DrawBitmap(bitmap, 0, 0);
+    dc.DrawBitmap(bitmap, centerPosition);
+}
+
+void DiffFrame::handleUpdateUi(wxUpdateUIEvent& event)
+{
+    updateUi();
+}
+
+void DiffFrame::updateUi()
+{
+    if (isDiffReady())
+        saveButton->Enable();
+    else
+        saveButton->Disable();
+
+    if (drawImageCheckBox->GetValue())
+        enableRadioButtons();
+    else
+        disableRadioButtons();
+}
+
+void DiffFrame::enableRadioButtons()
+{
+    drawFirstRadioButton->Enable();
+    drawSecondRadioButton->Enable();
+}
+
+void DiffFrame::disableRadioButtons()
+{
+    drawFirstRadioButton->Disable();
+    drawSecondRadioButton->Disable();
 }
 
 bool DiffFrame::isDiffReady() const
@@ -77,6 +112,8 @@ void DiffFrame::generateDiff()
 
     diff = diff::getImagesDiff(firstImage, secondImage, threshold, useImage, whichImage,
         bgColorPicker->GetColour(), fgColorPicker->GetColour());
+
+    updateUi();
 }
 
 int DiffFrame::tryGetThreshold(int threshold) const

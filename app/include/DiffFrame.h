@@ -16,10 +16,15 @@ private:
     void registerEventHandlers();
 
     void handleGenerateButtonClick(wxCommandEvent& event);
+    void handleUpdateUi(wxUpdateUIEvent& event);
     void handleOnPaint(wxPaintEvent& event);
 
     void paintNow();
     void draw(wxDC& dc);
+
+    void updateUi();
+    void enableRadioButtons();
+    void disableRadioButtons();
 
     bool isDiffReady() const;
     bool areImagesOk() const;
