@@ -148,4 +148,9 @@ void ImageService::makeMaster()
     isMaster = true;
 }
 
+bool ImageService::isLoaded() const
+{
+    return isImageLoaded;
+}
+
 }

@@ -18,7 +18,9 @@ DiffFrame::DiffFrame(wxWindow* parent, wxImage firstImage, wxImage secondImage)
 
 void DiffFrame::registerEventHandlers()
 {
-    Bind(wxEVT_BUTTON, &DiffFrame::handleGenerateButtonClick, this);
+    generateButton->Bind(wxEVT_BUTTON, &DiffFrame::handleGenerateButtonClick, this);
+    saveButton->Bind(wxEVT_BUTTON, &DiffFrame::handleSaveButtonClick, this);
+
     Bind(wxEVT_UPDATE_UI, &DiffFrame::handleUpdateUi, this);
 
     panel->Bind(wxEVT_PAINT, &DiffFrame::handleOnPaint, this);
@@ -28,6 +30,21 @@ void DiffFrame::handleGenerateButtonClick(wxCommandEvent& event)
 {
     generateDiff();
     paintNow();
+}
+
+void DiffFrame::handleSaveButtonClick(wxCommandEvent& event)
+{
+    const std::string filesWildcard{"PNG, JPEG, TIFF or BMP files \
+        (*.png;*.PNG;*.jpeg;*.jpg;*.JPG;*.JPEG;*.tiff;*.TIFF;*.bmp;*.BMP)| \
+        *.png;*.jpeg;*.tiff;*.bmp"};
+
+    wxFileDialog fileDialog{
+        this, "Save image", "", "", filesWildcard, wxFD_SAVE};
+
+    if (fileDialog.ShowModal() == wxID_CANCEL)
+        return;
+
+    saveDiffToFile(fileDialog.GetPath());
 }
 
 void DiffFrame::handleOnPaint(wxPaintEvent& event)
@@ -141,6 +158,38 @@ ImageIdentity DiffFrame::whichImageShouldUse() const
         return ImageIdentity::RIGHT;
 
     return ImageIdentity::NONE;
+}
+
+void DiffFrame::saveDiffToFile(const wxString& path) const
+{
+    if (not isDiffReady())
+        return;
+
+    const auto bitmap = wxBitmap(diff);
+
+    if (path.Matches("*.png") or path.Matches(".PNG"))
+    {
+        bitmap.SaveFile(path, wxBITMAP_TYPE_PNG);
+        return;
+    }
+    if (path.Matches("*.jpeg") or path.Matches("*.jpg") or path.Matches("*.JPEG") or
+        path.Matches("*.JPG"))
+    {
+        bitmap.SaveFile(path, wxBITMAP_TYPE_JPEG);
+        return;
+    }
+    if (path.Matches("*.tiff") or path.Matches("*.TIFF"))
+    {
+        bitmap.SaveFile(path, wxBITMAP_TYPE_TIFF);
+        return;
+    }
+    if (path.Matches("*.bmp") or path.Matches("*.BMP"))
+    {
+        bitmap.SaveFile(path, wxBITMAP_TYPE_BMP);
+        return;
+    }
+
+    statusBar->PushStatusText("Not supported file extension. Diff not saved.");
 }
 
 }

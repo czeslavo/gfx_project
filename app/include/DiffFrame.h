@@ -16,8 +16,10 @@ private:
     void registerEventHandlers();
 
     void handleGenerateButtonClick(wxCommandEvent& event);
+    void handleSaveButtonClick(wxCommandEvent& event);
     void handleUpdateUi(wxUpdateUIEvent& event);
     void handleOnPaint(wxPaintEvent& event);
+
 
     void paintNow();
     void draw(wxDC& dc);
@@ -35,6 +37,7 @@ private:
     bool shouldUseImage() const;
     ImageIdentity whichImageShouldUse() const;
 
+    void saveDiffToFile(const wxString& path) const;
 
     wxImage firstImage;
     wxImage secondImage;

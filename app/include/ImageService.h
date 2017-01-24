@@ -29,6 +29,8 @@ public:
 
     void scale(int zoom);
 
+    bool isLoaded() const;
+
 private:
     bool hasTheSameAspectRatio(const std::pair<int, int> size);
     void scaleToSize(const std::pair<int, int> size);

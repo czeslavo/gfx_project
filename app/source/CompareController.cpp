@@ -40,6 +40,13 @@ void CompareController::openDiffGenerator(wxCommandEvent& e)
 {
     using namespace diff;
 
+    if (not areBothImagesLoaded())
+    {
+        wxMessageDialog dialog{imagePanels.first, "Both images have to be loaded in order to generate a diff image."};
+        dialog.ShowModal();
+        return;
+    }
+
     DiffFrame* diffFrame = new DiffFrame(imagePanels.first, imageServices.first->getOriginalImage(),
                                          imageServices.second->getOriginalImage());
 
@@ -124,6 +131,11 @@ void CompareController::handleMouseOnScroll(wxMouseEvent& e)
 
     for (auto panel : {imagePanels.first, imagePanels.second})
         panel->paintNow();
+}
+
+bool CompareController::areBothImagesLoaded() const
+{
+    return imageServices.first->isLoaded() and imageServices.second->isLoaded();
 }
 
 }

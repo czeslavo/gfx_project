@@ -31,12 +31,12 @@ public:
     void handleMouseOnEndDragging(wxMouseEvent& e);
     void handleMouseOnScroll(wxMouseEvent& e);
 
-
-
 private:
     void handleLoadingFile(const std::string& filename, std::shared_ptr<ImageService> service);
     void handleLoadingFileAsMaster(const std::string& filename, std::shared_ptr<ImageService> service);
     void handleLoadingFileAsSlave(const std::string& filename, std::shared_ptr<ImageService> service);
+
+    bool areBothImagesLoaded() const;
 
     std::shared_ptr<SharedData> sharedData;
     std::pair<std::shared_ptr<ImageService>, std::shared_ptr<ImageService>> imageServices;
