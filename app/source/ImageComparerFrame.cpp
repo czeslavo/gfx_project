@@ -65,6 +65,9 @@ void ImageComparerFrame::registerMenuHandlers()
     using namespace core;
     toolBar->Bind(wxEVT_COMMAND_TOOL_CLICKED, &CompareController::startNewComparison, compareController.get(),
         NEW_COMPARISON_ID);
+
+    toolBar->Bind(wxEVT_COMMAND_TOOL_CLICKED, &CompareController::openDiffGenerator, compareController.get(),
+       DIFF_ID);
 }
 
 void ImageComparerFrame::handleLeftFilePickerChange(wxFileDirPickerEvent& event)

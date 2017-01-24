@@ -14,6 +14,9 @@ public:
 
     wxBitmap getProcessedBitmap() const;
     wxBitmap getOriginalBitmap() const;
+
+    wxImage getOriginalImage() const;
+
     std::pair<int, int> getOriginalSize() const;
     std::pair<int, int> getInitialSize() const;
 

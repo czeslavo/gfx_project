@@ -1,4 +1,5 @@
 #include "CompareController.h"
+#include "DiffFrame.h"
 
 namespace core
 {
@@ -33,6 +34,16 @@ void CompareController::startNewComparison(wxCommandEvent& e)
 
     for (auto panel : {imagePanels.first, imagePanels.second})
         panel->paintNow();
+}
+
+void CompareController::openDiffGenerator(wxCommandEvent& e)
+{
+    using namespace diff;
+
+    DiffFrame* diffFrame = new DiffFrame(imagePanels.first, imageServices.first->getOriginalImage(),
+                                         imageServices.second->getOriginalImage());
+
+    diffFrame->Show();
 }
 
 void CompareController::handleLoadingFile(const std::string& filename, ImageIdentity imageIdentity)

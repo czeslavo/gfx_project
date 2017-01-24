@@ -11,8 +11,7 @@ set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 # include directories
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/include
-                    ${CMAKE_CURRENT_SOURCE_DIR}/externals/json
-                    ${CMAKE_CURRENT_SOURCE_DIR}/forms)
+                    ${CMAKE_CURRENT_SOURCE_DIR}/externals/json)
 
 # gtest/gmock
 add_subdirectory(externals/googletest-release-1.8.0)

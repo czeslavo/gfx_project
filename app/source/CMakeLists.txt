@@ -1,5 +1,4 @@
 file (GLOB MAIN_SOURCE_FILES "*.cpp")
-file (GLOB FORMS_SOURCE_FILES "../forms/*.cpp")
 
 # wxWidgets
 set(CMAKE_PREFIX_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../externals/wxWidgets-3.1.0/install_dir)

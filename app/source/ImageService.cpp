@@ -66,6 +66,13 @@ wxBitmap ImageService::getBitmap(const wxImage& image) const
     return wxBitmap(image);
 }
 
+wxImage ImageService::getOriginalImage() const
+{
+    if (not isImageLoaded)
+        return wxImage();
+
+    return originalImage.Copy();
+}
 
 std::pair<int, int> ImageService::getOriginalSize() const
 {
