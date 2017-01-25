@@ -90,7 +90,17 @@ void ImageComparerFrame::handleRightFilePickerChange(wxFileDirPickerEvent& event
 
 void ImageComparerFrame::openHelp(wxCommandEvent& event)
 {
-    wxInfoMessageBox(this);
+    wxMessageDialog dialog{this,
+                           "Buttons:\n"
+                                   "\tStart new comparision - resets application's window and allows to make the next comparison\n"
+                                   "\tGenerate diff - opens dialog window which allows to generate diff image of two pictures\n"
+                                   "\tCrop and save - turns on the crop mode which allows to select a picture's fragment with a mouse's left button and save it  \n"
+                                   "\tHelp - shows this window\n\n"
+                                   "Functions:\n"
+                                   "\tZoom - you can zoom in and out with a mouse wheel having the cursor on the picture\n"
+                                   "\tDrag - you can drag the image holding the left mouse button\n"
+                           , "Help"};
+    dialog.ShowModal();
 }
 
 }
