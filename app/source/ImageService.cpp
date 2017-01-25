@@ -1,4 +1,3 @@
-#include <ImageService.h>
 #include "ImageService.h"
 
 namespace core
@@ -89,14 +88,6 @@ std::pair<int, int> ImageService::getOriginalSize() const
 std::pair<int, int> ImageService::getInitialSize() const
 {
     return std::make_pair(initialSize.width, initialSize.height);
-}
-
-int ImageService::getZoom() const
-{
-    if (not isImageLoaded)
-        return 0;
-
-    return zoom;
 }
 
 int ImageService::getInitialZoom() const
