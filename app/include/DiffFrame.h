@@ -21,6 +21,7 @@ private:
     void pickFgColor(wxCommandEvent& event);
     void handleUpdateUi(wxUpdateUIEvent& event);
     void handleOnPaint(wxPaintEvent& event);
+    void handleResize(wxSizeEvent& event);
 
     void paintNow();
     void draw(wxDC& dc);

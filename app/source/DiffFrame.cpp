@@ -24,6 +24,7 @@ void DiffFrame::registerEventHandlers()
 
     Bind(wxEVT_UPDATE_UI, &DiffFrame::handleUpdateUi, this);
 
+    panel->Bind(wxEVT_SIZE, &DiffFrame::handleResize, this);
     panel->Bind(wxEVT_PAINT, &DiffFrame::handleOnPaint, this);
 
     bgColorPicker->Bind(wxEVT_BUTTON, &DiffFrame::pickBgColor, this);
@@ -56,6 +57,11 @@ void DiffFrame::handleOnPaint(wxPaintEvent& event)
 {
     wxPaintDC dc(panel);
     draw(dc);
+}
+
+void DiffFrame::handleResize(wxSizeEvent& event)
+{
+    wxWindow::Refresh();
 }
 
 void DiffFrame::paintNow()
