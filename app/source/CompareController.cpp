@@ -62,7 +62,8 @@ void CompareController::openDiffGenerator(wxCommandEvent& e)
 
 void CompareController::startCropping(wxCommandEvent& e)
 {
-    sharedData->cropData.cropMode = true;
+    if (areBothImagesLoaded())
+        sharedData->cropData.cropMode = true;
 }
 
 void CompareController::handleLoadingFile(const std::string& filename, ImageIdentity imageIdentity)
