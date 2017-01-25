@@ -32,7 +32,7 @@ ImagesComparerFrameBase::ImagesComparerFrameBase( wxWindow* parent, wxWindowID i
 
 	toolBar->AddSeparator();
 
-	batchButton = toolBar->AddTool( BATCH_ID, wxEmptyString, wxBitmap( wxT("icons\\batch.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Batch diff generator"), wxEmptyString, NULL );
+	helpButton = toolBar->AddTool( HELP_ID, wxEmptyString, wxBitmap( wxT("icons\\help.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Batch diff generator"), wxEmptyString, NULL );
 
 	toolBar->Realize();
 

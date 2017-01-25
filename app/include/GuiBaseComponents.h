@@ -34,12 +34,11 @@
 
 namespace gui
 {
-
     enum MenuIds {
         NEW_COMPARISON_ID,
         DIFF_ID,
         CROP_ID,
-        BATCH_ID
+        HELP_ID
     };
 
 
@@ -55,7 +54,7 @@ namespace gui
 			wxToolBarToolBase* newComparisonButton;
 			wxToolBarToolBase* diffButton;
 			wxToolBarToolBase* cropButton;
-			wxToolBarToolBase* batchButton;
+			wxToolBarToolBase* helpButton;
 			wxStatusBar* statusBar;
 			wxFilePickerCtrl* leftFilePicker;
 			wxFilePickerCtrl* rightFilePicker;

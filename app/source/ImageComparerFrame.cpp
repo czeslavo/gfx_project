@@ -1,5 +1,6 @@
-#include "ImageService.h"
+#include <wx/aboutdlg.h>
 
+#include "ImageService.h"
 #include "ImageComparerFrame.h"
 
 namespace gui
@@ -71,6 +72,8 @@ void ImageComparerFrame::registerMenuHandlers()
 
     toolBar->Bind(wxEVT_COMMAND_TOOL_CLICKED, &CompareController::startCropping, compareController.get(),
        CROP_ID);
+
+    toolBar->Bind(wxEVT_COMMAND_TOOL_CLICKED, &ImageComparerFrame::openHelp, this, HELP_ID);
 }
 
 void ImageComparerFrame::handleLeftFilePickerChange(wxFileDirPickerEvent& event)
@@ -83,6 +86,11 @@ void ImageComparerFrame::handleRightFilePickerChange(wxFileDirPickerEvent& event
 {
     using namespace core;
     compareController->handleLoadingFile(event.GetPath().ToStdString(), ImageIdentity::RIGHT);
+}
+
+void ImageComparerFrame::openHelp(wxCommandEvent& event)
+{
+    wxInfoMessageBox(this);
 }
 
 }

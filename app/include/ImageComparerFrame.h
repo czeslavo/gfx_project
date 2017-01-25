@@ -21,6 +21,7 @@ private:
 
     void handleLeftFilePickerChange(wxFileDirPickerEvent& event);
     void handleRightFilePickerChange(wxFileDirPickerEvent& event);
+    void openHelp(wxCommandEvent& event);
 
     std::unique_ptr<core::CompareController> compareController{nullptr};
 
