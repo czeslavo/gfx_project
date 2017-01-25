@@ -25,6 +25,11 @@ void CompareController::registerSharedData(std::shared_ptr<SharedData> data)
     sharedData = data;
 }
 
+void CompareController::registerFilePickers(wxFilePickerCtrl* first, wxFilePickerCtrl* second)
+{
+    filePickers = std::make_pair(first, second);
+}
+
 void CompareController::startNewComparison(wxCommandEvent& e)
 {
     for (auto service : {imageServices.first, imageServices.second})
@@ -33,6 +38,9 @@ void CompareController::startNewComparison(wxCommandEvent& e)
     sharedData->reset();
 
     redrawEverything();
+
+    for (auto filePicker : {filePickers.first, filePickers.second})
+        filePicker->SetPath("");
 }
 
 void CompareController::openDiffGenerator(wxCommandEvent& e)

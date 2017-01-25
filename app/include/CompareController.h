@@ -2,6 +2,7 @@
 
 #include <utility>
 #include <memory>
+#include <wx/filepicker.h>
 
 #include "SharedData.h"
 #include "ImageComparePanel.h"
@@ -20,6 +21,7 @@ public:
     void registerImagePanels(gui::ImageComparePanel* first, gui::ImageComparePanel* second);
     void registerSharedData(std::shared_ptr<SharedData> data);
     void registerInfoPanels(gui::ImageInfoPanel* first, gui::ImageInfoPanel* second);
+    void registerFilePickers(wxFilePickerCtrl* first, wxFilePickerCtrl* second);
 
     void startNewComparison(wxCommandEvent& e);
     void openDiffGenerator(wxCommandEvent& e);
@@ -54,6 +56,7 @@ private:
     std::pair<std::shared_ptr<ImageService>, std::shared_ptr<ImageService>> imageServices;
     std::pair<gui::ImageComparePanel*, gui::ImageComparePanel*> imagePanels;
     std::pair<gui::ImageInfoPanel*, gui::ImageInfoPanel*> imageInfoPanels;
+    std::pair<wxFilePickerCtrl*, wxFilePickerCtrl*> filePickers;
 
 };
 

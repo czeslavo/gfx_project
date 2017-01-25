@@ -1,3 +1,4 @@
+#include <ImageService.h>
 #include "ImageService.h"
 
 namespace core
@@ -123,6 +124,8 @@ void ImageService::reset()
     originalImage = wxImage();
     processedImage = wxImage();
     isImageLoaded = false;
+    initialSize.width = 0;
+    initialSize.height = 0;
 }
 
 void ImageService::scale(int zoom)

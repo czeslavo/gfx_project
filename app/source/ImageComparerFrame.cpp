@@ -27,6 +27,7 @@ ImageComparerFrame::ImageComparerFrame(wxWindow* parent)
     compareController->registerImagePanels(leftImagePanel, rightImagePanel);
     compareController->registerSharedData(sharedData);
     compareController->registerInfoPanels(leftPanel, rightPanel);
+    compareController->registerFilePickers(leftFilePicker, rightFilePicker);
 
     registerEventHandlers();
 }
