@@ -22,17 +22,17 @@ ImagesComparerFrameBase::ImagesComparerFrameBase( wxWindow* parent, wxWindowID i
 	toolBar = this->CreateToolBar( wxTB_HORIZONTAL, wxID_ANY );
 	toolBar->SetBackgroundColour( wxColour( 240, 240, 240 ) );
 
-	newComparisonButton = toolBar->AddTool( NEW_COMPARISON_ID, wxT("New comparison"), wxBitmap( wxT("icons/new.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Start new comparison"), wxEmptyString, NULL );
+	newComparisonButton = toolBar->AddTool( NEW_COMPARISON_ID, wxT("New comparison"), wxBitmap( wxT("icons\\new.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Start new comparison"), wxEmptyString, NULL );
 
 	toolBar->AddSeparator();
 
-	diffButton = toolBar->AddTool( DIFF_ID, wxEmptyString, wxBitmap( wxT("icons/diff.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Generate diff"), wxEmptyString, NULL );
+	diffButton = toolBar->AddTool( DIFF_ID, wxEmptyString, wxBitmap( wxT("icons\\diff.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Generate diff"), wxEmptyString, NULL );
 
-	cropButton = toolBar->AddTool( CROP_ID, wxEmptyString, wxBitmap( wxT("icons/crop.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Crop and save"), wxEmptyString, NULL );
+	cropButton = toolBar->AddTool( CROP_ID, wxEmptyString, wxBitmap( wxT("icons\\crop.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Crop and save"), wxEmptyString, NULL );
 
 	toolBar->AddSeparator();
 
-	batchButton = toolBar->AddTool( BATCH_ID, wxEmptyString, wxBitmap( wxT("icons/batch.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Batch diff generator"), wxEmptyString, NULL );
+	batchButton = toolBar->AddTool( BATCH_ID, wxEmptyString, wxBitmap( wxT("icons\\batch.png"), wxBITMAP_TYPE_ANY ), wxNullBitmap, wxITEM_NORMAL, wxT("Batch diff generator"), wxEmptyString, NULL );
 
 	toolBar->Realize();
 

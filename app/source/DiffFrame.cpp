@@ -136,7 +136,7 @@ void DiffFrame::generateDiff()
 int DiffFrame::tryGetThreshold(int threshold) const
 {
     try {
-        threshold = std::stoi(std::string(thresholdText->GetValue()));
+        threshold = 100;//std::stoi(std::string(thresholdText->GetValue()));
     }
     catch (const std::exception& e) {
         statusBar->PushStatusText("Couldn't parse threshold input. It has to be integer number.");

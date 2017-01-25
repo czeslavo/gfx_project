@@ -9,7 +9,7 @@ set(wxWidgets_USE_STATIC ON)
 find_package(wxWidgets COMPONENTS core base REQUIRED)
 include("${wxWidgets_USE_FILE}")
 
-add_executable(run_app ${MAIN_SOURCE_FILES} ${FORMS_SOURCE_FILES})
+add_executable(run_app ${MAIN_SOURCE_FILES} ${FORMS_SOURCE_FILES} ../include/WindowPatch.h)
 target_link_libraries(run_app ${wxWidgets_LIBRARIES})
 
 install(DIRECTORY ../forms/icons DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../artifacts)

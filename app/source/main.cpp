@@ -13,6 +13,8 @@ IMPLEMENT_APP(App)
 
 bool App::OnInit()
 {
+    wxInitAllImageHandlers();
+
     mainFrame = new gui::ImageComparerFrame{nullptr};
     mainFrame->Show();
 

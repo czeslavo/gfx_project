@@ -1,4 +1,5 @@
 #include "ImageInfoPanel.h"
+#include "WindowPatch.h"
 
 namespace gui
 {
@@ -17,6 +18,11 @@ void ImageInfoPanel::registerEventHandlers()
 void ImageInfoPanel::registerImageService(std::shared_ptr<core::ImageService> service)
 {
     imageService = service;
+}
+
+void ImageInfoPanel::paintNow()
+{
+    wxWindow::Refresh();
 }
 
 void ImageInfoPanel::onPaint(wxPaintEvent& event)

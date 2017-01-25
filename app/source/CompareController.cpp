@@ -32,8 +32,7 @@ void CompareController::startNewComparison(wxCommandEvent& e)
 
     sharedData->reset();
 
-    for (auto panel : {imagePanels.first, imagePanels.second})
-        panel->paintNow();
+    redrawEverything();
 }
 
 void CompareController::openDiffGenerator(wxCommandEvent& e)
@@ -89,6 +88,8 @@ void CompareController::handleLoadingFileAsMaster(const std::string& filename,
     sharedData->masterInfo.isAlive = true;
     sharedData->masterInfo.width = masterSize.first;
     sharedData->masterInfo.height = masterSize.second;
+
+    redrawEverything();
 }
 
 void CompareController::handleLoadingFileAsSlave(const std::string& filename,
@@ -98,6 +99,8 @@ void CompareController::handleLoadingFileAsSlave(const std::string& filename,
                                            sharedData->masterInfo.height);
 
     service->loadImageFromFileAsSlave(filename, masterSize);
+
+    redrawEverything();
 }
 
 void CompareController::handleMouseOnStartDragging(wxMouseEvent& e)
@@ -124,8 +127,7 @@ void CompareController::handleMouseOnDrag(wxMouseEvent& e)
     sharedData->imageInfo.x = sharedData->dragInfo.x0 - e.GetX();
     sharedData->imageInfo.y = sharedData->dragInfo.y0 - e.GetY();
 
-    for (auto panel : {imagePanels.first, imagePanels.second})
-        panel->paintNow();
+    redrawEverything();
 }
 
 void CompareController::handleMouseOnEndDragging(wxMouseEvent& e)
@@ -143,8 +145,7 @@ void CompareController::handleMouseOnScroll(wxMouseEvent& e)
     for (auto service : {imageServices.first, imageServices.second})
         service->setZoom(sharedData->imageInfo.zoom);
 
-    for (auto panel : {imagePanels.first, imagePanels.second})
-        panel->paintNow();
+    redrawEverything();
 }
 
 void CompareController::handleMouseOnStartDraggingCrop(wxMouseEvent& e)
@@ -159,8 +160,7 @@ void CompareController::handleMouseOnDragCrop(wxMouseEvent& e)
     sharedData->cropData.x = e.GetX();
     sharedData->cropData.y = e.GetY();
 
-    for (auto panel : {imagePanels.first, imagePanels.second})
-        panel->paintNow();
+    redrawEverything();
 }
 
 void CompareController::handleMouseOnEndDraggingCrop(wxMouseEvent& e)
@@ -168,8 +168,7 @@ void CompareController::handleMouseOnEndDraggingCrop(wxMouseEvent& e)
     sharedData->cropData.startedCropping = false;
     sharedData->cropData.cropMode = false;
 
-    for (auto panel : {imagePanels.first, imagePanels.second})
-        panel->paintNow();
+    redrawEverything();
 
     saveCroppedToFile();
 }
@@ -278,4 +277,14 @@ bool CompareController::areBothImagesLoaded() const
     return imageServices.first->isLoaded() and imageServices.second->isLoaded();
 }
 
+void CompareController::redrawEverything()
+{
+    for (auto panel : {imagePanels.first, imagePanels.second})
+        panel->paintNow();
+
+    for (auto panel : {imageInfoPanels.first, imageInfoPanels.second})
+        panel->paintNow();
 }
+
+}
+

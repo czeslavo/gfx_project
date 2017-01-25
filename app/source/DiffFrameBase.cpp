@@ -44,7 +44,7 @@ DiffFrameBase::DiffFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	thresholdText->SetMaxLength(6);
 	}
 	#else
-	thresholdText1->SetMaxLength(6);
+	thresholdText->SetMaxLength(6);
 	#endif
 	bSizer251->Add( thresholdText, 0, wxALL|wxEXPAND, 5 );
 
