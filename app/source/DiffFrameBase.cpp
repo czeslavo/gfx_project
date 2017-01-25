@@ -84,7 +84,8 @@ DiffFrameBase::DiffFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	drawImageCheckBox->SetValue(true);
 	bSizer301->Add( drawImageCheckBox, 0, wxALL, 5 );
 
-	drawFirstRadioButton = new wxRadioButton( this, wxID_ANY, wxT("First image"), wxDefaultPosition, wxDefaultSize, 0 );
+	drawFirstRadioButton = new wxRadioButton( this, wxID_ANY, wxT("First image"), wxDefaultPosition, wxDefaultSize, 1 );
+	drawFirstRadioButton->SetValue(true);
 	bSizer301->Add( drawFirstRadioButton, 0, wxLEFT, 15 );
 
 	drawSecondRadioButton = new wxRadioButton( this, wxID_ANY, wxT("Second image"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -108,7 +109,7 @@ DiffFrameBase::DiffFrameBase( wxWindow* parent, wxWindowID id, const wxString& t
 	fgSizer1->Add( bSizer19, 0, wxALIGN_BOTTOM|wxALIGN_RIGHT, 5 );
 
 
-	bSizer12->Add( fgSizer1, 1, wxALL|wxEXPAND, 5 );
+	bSizer12->Add( fgSizer1, 0, wxALL|wxEXPAND, 5 );
 
 
 	this->SetSizer( bSizer12 );

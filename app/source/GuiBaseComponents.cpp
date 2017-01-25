@@ -47,14 +47,14 @@ ImagesComparerFrameBase::ImagesComparerFrameBase( wxWindow* parent, wxWindowID i
 	bSizer8 = new wxBoxSizer( wxVERTICAL );
 
     const std::string pickersWildcard{"PNG, JPEG, TIFF or BMP files \
-        (*.png;*.PNG;*.jpeg;*.jpg;*.JPG;*.JPEG;*.tiff;*.TIFF;*.bmp;*.BMP)| \
-        *.png;*.jpeg;*.tiff;*.bmp"};
+        (*.png;*.jpeg;*.tiff;*.bmp)| \
+        *.png;*.PNG;*.jpeg;*.jpg;*.JPG;*.JPEG;*.tiff;*.TIFF;*.bmp;*.BMP"};
 
 	leftFilePicker = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Select an image"), pickersWildcard,
     wxDefaultPosition, wxSize( 300,-1 ), wxFLP_DEFAULT_STYLE|wxFLP_FILE_MUST_EXIST|wxFLP_OPEN );
 	leftFilePicker->SetBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOW ) );
 
-	bSizer8->Add( leftFilePicker, 0, wxALL|wxEXPAND, 5 );
+	bSizer8->Add( leftFilePicker, 0, wxALL|wxEXPAND, 2 );
 
 
 	bSizer3->Add( bSizer8, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
@@ -72,7 +72,7 @@ ImagesComparerFrameBase::ImagesComparerFrameBase( wxWindow* parent, wxWindowID i
 	bSizer3->Add( bSizer11, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	bSizer4->Add( bSizer3, 1, wxEXPAND, 5 );
+	bSizer4->Add( bSizer3, 0, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer5;
 	bSizer5 = new wxBoxSizer( wxHORIZONTAL );
@@ -96,7 +96,7 @@ ImagesComparerFrameBase::ImagesComparerFrameBase( wxWindow* parent, wxWindowID i
 	bSizer6->Add( rightPanel, 1, wxEXPAND | wxALL, 5 );
 
 
-	bSizer4->Add( bSizer6, 2, wxEXPAND, 5 );
+	bSizer4->Add( bSizer6, 0, wxEXPAND, 5 );
 
 
 	this->SetSizer( bSizer4 );
@@ -119,18 +119,11 @@ ImageInfoPanelBase::ImageInfoPanelBase( wxWindow* parent, wxWindowID id, const w
 
 	zoomLabel = new wxStaticText( this, wxID_ANY, wxT("Zoom:"), wxDefaultPosition, wxDefaultSize, 0 );
 	zoomLabel->Wrap( -1 );
-	bSizer14->Add( zoomLabel, 0, wxALL, 5 );
+	bSizer14->Add( zoomLabel, 0, wxALL, 2 );
 
-	zoomText = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	#ifdef __WXGTK__
-	if ( !zoomText->HasFlag( wxTE_MULTILINE ) )
-	{
-	zoomText->SetMaxLength( 6 );
-	}
-	#else
-	zoomText->SetMaxLength( 6 );
-	#endif
-	bSizer14->Add( zoomText, 0, 0, 5 );
+	zoomText = new wxStaticText( this, wxID_ANY, wxT("0"), wxDefaultPosition, wxDefaultSize, 0 );
+
+	bSizer14->Add( zoomText, 0, wxALL, 2 );
 
 
 	bSizer13->Add( bSizer14, 1, wxALIGN_LEFT|wxALL, 5 );
@@ -140,11 +133,11 @@ ImageInfoPanelBase::ImageInfoPanelBase( wxWindow* parent, wxWindowID id, const w
 
 	sizeLabel = new wxStaticText( this, wxID_ANY, wxT("Size:"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizeLabel->Wrap( -1 );
-	bSizer17->Add( sizeLabel, 0, wxALL, 5 );
+	bSizer17->Add( sizeLabel, 0, wxALL, 2 );
 
 	sizeText = new wxStaticText( this, wxID_ANY, wxT("100 x 100 px"), wxDefaultPosition, wxDefaultSize, 0 );
 	sizeText->Wrap( -1 );
-	bSizer17->Add( sizeText, 0, wxALL, 5 );
+	bSizer17->Add( sizeText, 0, wxALL, 2 );
 
 
 	bSizer13->Add( bSizer17, 1, wxALL, 5 );

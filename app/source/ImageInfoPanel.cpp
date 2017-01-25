@@ -47,7 +47,7 @@ void ImageInfoPanel::setSizeText()
 void ImageInfoPanel::setZoomText()
 {
     const auto zoom = std::to_string(imageService->getInitialZoom());
-    zoomText->ChangeValue(zoom);
+    zoomText->SetLabelText(zoom);
 }
 
 

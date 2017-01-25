@@ -41,8 +41,8 @@ void DiffFrame::handleGenerateButtonClick(wxCommandEvent& event)
 void DiffFrame::handleSaveButtonClick(wxCommandEvent& event)
 {
     const std::string filesWildcard{"PNG, JPEG, TIFF or BMP files \
-        (*.png;*.PNG;*.jpeg;*.jpg;*.JPG;*.JPEG;*.tiff;*.TIFF;*.bmp;*.BMP)| \
-        *.png;*.jpeg;*.tiff;*.bmp"};
+        (*.png;*.jpeg;*.tiff;*.bmp)| \
+        *.png;*.PNG;*.jpeg;*.jpg;*.JPG;*.JPEG;*.tiff;*.TIFF;*.bmp;*.BMP"};
 
     wxFileDialog fileDialog{
         this, "Save image", "", "", filesWildcard, wxFD_SAVE};

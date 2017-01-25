@@ -39,9 +39,9 @@ public:
     void handleMouseOnEndDraggingCrop(wxMouseEvent& e);
 
 private:
-    void handleLoadingFile(const std::string& filename, std::shared_ptr<ImageService> service);
-    void handleLoadingFileAsMaster(const std::string& filename, std::shared_ptr<ImageService> service);
-    void handleLoadingFileAsSlave(const std::string& filename, std::shared_ptr<ImageService> service);
+    void handleLoadingFile(const std::string& filename, std::shared_ptr<ImageService> service, wxFilePickerCtrl* picker);
+    void handleLoadingFileAsMaster(const std::string& filename, std::shared_ptr<ImageService> service, wxFilePickerCtrl* picker);
+    void handleLoadingFileAsSlave(const std::string& filename, std::shared_ptr<ImageService> service, wxFilePickerCtrl* picker);
 
     bool areBothImagesLoaded() const;
     void saveCroppedToFile();

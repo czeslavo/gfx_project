@@ -1,7 +1,6 @@
 #include <wx/dcbuffer.h>
 
 #include "ImageComparePanel.h"
-#include <iostream>
 
 namespace gui
 {

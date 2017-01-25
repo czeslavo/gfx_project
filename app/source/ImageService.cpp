@@ -40,8 +40,8 @@ bool ImageService::hasTheSameAspectRatio(const std::pair<int, int> size)
     const float height = originalImage.GetHeight();
 
     constexpr float epsilon{0.001};
-    return static_cast<float>(size.first) / static_cast<float>(size.second) -
-           width / height <= epsilon;
+    return static_cast<float>(size.first) / width -
+           static_cast<float>(size.second) / height <= epsilon;
 }
 
 void ImageService::scaleToSize(const std::pair<int, int> size)

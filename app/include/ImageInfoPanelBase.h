@@ -11,7 +11,7 @@ class ImageInfoPanelBase : public wxPanel
 
     protected:
         wxStaticText* zoomLabel;
-        wxTextCtrl* zoomText;
+        wxStaticText* zoomText;
         wxStaticText* sizeLabel;
         wxStaticText* sizeText;
 

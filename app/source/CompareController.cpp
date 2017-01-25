@@ -39,8 +39,10 @@ void CompareController::startNewComparison(wxCommandEvent& e)
 
     redrawEverything();
 
-    for (auto filePicker : {filePickers.first, filePickers.second})
+    for (auto filePicker : {filePickers.first, filePickers.second}) {
         filePicker->SetPath("");
+        filePicker->Enable();
+    }
 }
 
 void CompareController::openDiffGenerator(wxCommandEvent& e)
@@ -71,23 +73,25 @@ void CompareController::handleLoadingFile(const std::string& filename, ImageIden
     switch (imageIdentity)
     {
         case ImageIdentity::LEFT:
-            return handleLoadingFile(filename, imageServices.first);
+            return handleLoadingFile(filename, imageServices.first, filePickers.first);
         case ImageIdentity::RIGHT:
-            return handleLoadingFile(filename, imageServices.second);
+            return handleLoadingFile(filename, imageServices.second, filePickers.second);
         default:
             return;
     }
 }
 
-void CompareController::handleLoadingFile(const std::string& filename, std::shared_ptr<ImageService> service)
+void CompareController::handleLoadingFile(const std::string& filename, std::shared_ptr<ImageService> service,
+                                          wxFilePickerCtrl* picker)
 {
     return sharedData->masterInfo.isAlive ?
-        handleLoadingFileAsSlave(filename, service) :
-        handleLoadingFileAsMaster(filename, service);
+        handleLoadingFileAsSlave(filename, service, picker) :
+        handleLoadingFileAsMaster(filename, service, picker);
 }
 
 void CompareController::handleLoadingFileAsMaster(const std::string& filename,
-                                                  std::shared_ptr<ImageService> service)
+                                                  std::shared_ptr<ImageService> service,
+                                                  wxFilePickerCtrl* picker)
 {
     service->makeMaster();
     service->loadImageFromFileAsMaster(filename);
@@ -98,11 +102,13 @@ void CompareController::handleLoadingFileAsMaster(const std::string& filename,
     sharedData->masterInfo.width = masterSize.first;
     sharedData->masterInfo.height = masterSize.second;
 
+    picker->Disable();
     redrawEverything();
 }
 
 void CompareController::handleLoadingFileAsSlave(const std::string& filename,
-                                                 std::shared_ptr<ImageService> service)
+                                                 std::shared_ptr<ImageService> service,
+                                                 wxFilePickerCtrl* picker)
 {
     const auto masterSize = std::make_pair(sharedData->masterInfo.width,
                                            sharedData->masterInfo.height);
@@ -116,6 +122,7 @@ void CompareController::handleLoadingFileAsSlave(const std::string& filename,
         return;
     }
 
+    picker->Disable();
     redrawEverything();
 }
 
@@ -207,8 +214,8 @@ void CompareController::saveCroppedToFile()
 
 
     const std::string filesWildcard{"PNG, JPEG, TIFF or BMP files \
-        (*.png;*.PNG;*.jpeg;*.jpg;*.JPG;*.JPEG;*.tiff;*.TIFF;*.bmp;*.BMP)| \
-        *.png;*.jpeg;*.tiff;*.bmp"};
+        (*.png;*.jpeg;*.tiff;*.bmp)| \
+        *.png;*.PNG;*.jpeg;*.jpg;*.JPG;*.JPEG;*.tiff;*.TIFF;*.bmp;*.BMP"};
 
     wxFileDialog fileDialog{
         imagePanels.first, "Save image", "", "", filesWildcard, wxFD_SAVE};
