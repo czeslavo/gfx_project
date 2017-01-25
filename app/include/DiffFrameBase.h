@@ -4,6 +4,9 @@
 #include <wx/colour.h>
 #include <wx/clrpicker.h>
 
+/*
+ * Base class for DiffFrame. Creates the controls in ctor.
+ */
 class DiffFrameBase : public wxFrame
 {
     private:

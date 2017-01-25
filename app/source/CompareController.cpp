@@ -37,7 +37,7 @@ void CompareController::startNewComparison(wxCommandEvent& e)
 
     sharedData->reset();
 
-    redrawEverything();
+    redrawAllPanels();
 
     for (auto filePicker : {filePickers.first, filePickers.second}) {
         filePicker->SetPath("");
@@ -103,7 +103,7 @@ void CompareController::handleLoadingFileAsMaster(const std::string& filename,
     sharedData->masterInfo.height = masterSize.second;
 
     picker->Disable();
-    redrawEverything();
+    redrawAllPanels();
 }
 
 void CompareController::handleLoadingFileAsSlave(const std::string& filename,
@@ -123,7 +123,7 @@ void CompareController::handleLoadingFileAsSlave(const std::string& filename,
     }
 
     picker->Disable();
-    redrawEverything();
+    redrawAllPanels();
 }
 
 void CompareController::handleMouseOnStartDragging(wxMouseEvent& e)
@@ -150,7 +150,7 @@ void CompareController::handleMouseOnDrag(wxMouseEvent& e)
     sharedData->imageInfo.x = sharedData->dragInfo.x0 - e.GetX();
     sharedData->imageInfo.y = sharedData->dragInfo.y0 - e.GetY();
 
-    redrawEverything();
+    redrawAllPanels();
 }
 
 void CompareController::handleMouseOnEndDragging(wxMouseEvent& e)
@@ -168,7 +168,7 @@ void CompareController::handleMouseOnScroll(wxMouseEvent& e)
     for (auto service : {imageServices.first, imageServices.second})
         service->setZoom(sharedData->imageInfo.zoom);
 
-    redrawEverything();
+    redrawAllPanels();
 }
 
 void CompareController::handleMouseOnStartDraggingCrop(wxMouseEvent& e)
@@ -183,7 +183,7 @@ void CompareController::handleMouseOnDragCrop(wxMouseEvent& e)
     sharedData->cropData.x = e.GetX();
     sharedData->cropData.y = e.GetY();
 
-    redrawEverything();
+    redrawAllPanels();
 }
 
 void CompareController::handleMouseOnEndDraggingCrop(wxMouseEvent& e)
@@ -191,7 +191,7 @@ void CompareController::handleMouseOnEndDraggingCrop(wxMouseEvent& e)
     sharedData->cropData.startedCropping = false;
     sharedData->cropData.cropMode = false;
 
-    redrawEverything();
+    redrawAllPanels();
 
     saveCroppedToFile();
 }
@@ -300,7 +300,7 @@ bool CompareController::areBothImagesLoaded() const
     return imageServices.first->isLoaded() and imageServices.second->isLoaded();
 }
 
-void CompareController::redrawEverything()
+void CompareController::redrawAllPanels()
 {
     for (auto panel : {imagePanels.first, imagePanels.second})
         panel->paintNow();
