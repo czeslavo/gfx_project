@@ -108,6 +108,13 @@ void CompareController::handleLoadingFileAsSlave(const std::string& filename,
 
     service->loadImageFromFileAsSlave(filename, masterSize);
 
+    if (not areBothImagesLoaded())
+    {
+        wxMessageDialog dialog{imagePanels.first, "Images should have the same aspect ratio."};
+        dialog.ShowModal();
+        return;
+    }
+
     redrawEverything();
 }
 
