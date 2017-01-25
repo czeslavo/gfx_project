@@ -5,7 +5,7 @@
 namespace gui
 {
 
-/*
+/**
  * Base class for ImageInfoPanel. Creates controls in its constructor.
  */
 class ImageInfoPanelBase : public wxPanel

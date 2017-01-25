@@ -3,7 +3,7 @@
 namespace core
 {
 
-/*
+/**
  * It's data used to communicate between the application components.
  * - dragInfo is used for dragging the image - it's changed by CompareController and used by ImageComparePanel to draw
  * the images

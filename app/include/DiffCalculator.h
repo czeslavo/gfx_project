@@ -7,7 +7,7 @@
 namespace diff
 {
 
-/*
+/**
  * Helper function for generating images diff image. It calculates RGB differences per each pixel and if the sum of
  * them is higher than the threshold, the pixel is marked as the difference.
  *

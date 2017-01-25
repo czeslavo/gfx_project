@@ -1,6 +1,6 @@
 #include<sstream>
 
-/*
+/**
  * Patch used for windows build, since gcc in mingw doesn't support this function.
  */
 namespace std {
