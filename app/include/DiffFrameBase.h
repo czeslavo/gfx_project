@@ -13,9 +13,9 @@ class DiffFrameBase : public wxFrame
         wxStaticText* m_staticText91;
         wxTextCtrl* thresholdText;
         wxStaticText* m_staticText111;
-        wxColourPickerCtrl* fgColorPicker;
+        wxButton* fgColorPicker;
         wxStaticText* m_staticText121;
-        wxColourPickerCtrl* bgColorPicker;
+        wxButton* bgColorPicker;
         wxCheckBox* drawImageCheckBox;
         wxRadioButton* drawFirstRadioButton;
         wxRadioButton* drawSecondRadioButton;

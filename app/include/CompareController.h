@@ -48,6 +48,8 @@ private:
     wxRect fitRectangleToSize(const wxRect& rect, const wxSize& size);
     void saveBitmapToFile(const wxString& path, wxBitmap bitmap);
 
+    void redrawEverything();
+
     std::shared_ptr<SharedData> sharedData;
     std::pair<std::shared_ptr<ImageService>, std::shared_ptr<ImageService>> imageServices;
     std::pair<gui::ImageComparePanel*, gui::ImageComparePanel*> imagePanels;

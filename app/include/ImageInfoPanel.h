@@ -14,6 +14,7 @@ public:
     ImageInfoPanel(wxWindow* parent);
 
     void onPaint(wxPaintEvent& event);
+    void paintNow();
 
     void registerImageService(std::shared_ptr<core::ImageService> service);
 

@@ -1,4 +1,5 @@
 #include <wx/dcbuffer.h>
+#include <wx/colordlg.h>
 
 #include "DiffFrame.h"
 #include "DiffCalculator.h"
@@ -24,6 +25,10 @@ void DiffFrame::registerEventHandlers()
     Bind(wxEVT_UPDATE_UI, &DiffFrame::handleUpdateUi, this);
 
     panel->Bind(wxEVT_PAINT, &DiffFrame::handleOnPaint, this);
+
+    bgColorPicker->Bind(wxEVT_BUTTON, &DiffFrame::pickBgColor, this);
+    fgColorPicker->Bind(wxEVT_BUTTON, &DiffFrame::pickFgColor, this);
+
 }
 
 void DiffFrame::handleGenerateButtonClick(wxCommandEvent& event)
@@ -128,7 +133,7 @@ void DiffFrame::generateDiff()
     const auto whichImage = whichImageShouldUse();
 
     diff = diff::getImagesDiff(firstImage, secondImage, threshold, useImage, whichImage,
-        bgColorPicker->GetColour(), fgColorPicker->GetColour());
+        colors.bg, colors.fg);
 
     updateUi();
 }
@@ -190,6 +195,26 @@ void DiffFrame::saveDiffToFile(const wxString& path) const
     }
 
     statusBar->PushStatusText("Not supported file extension. Diff not saved.");
+}
+
+void DiffFrame::pickBgColor(wxCommandEvent& event)
+{
+    wxColourDialog* colourDialog = new wxColourDialog(this);
+
+    if (colourDialog->ShowModal() == wxID_CANCEL)
+        return;
+
+    colors.bg = colourDialog->GetColourData().GetColour();
+}
+
+void DiffFrame::pickFgColor(wxCommandEvent& event)
+{
+    wxColourDialog* colourDialog = new wxColourDialog(this);
+
+    if (colourDialog->ShowModal() == wxID_CANCEL)
+        return;
+
+    colors.fg = colourDialog->GetColourData().GetColour();
 }
 
 }

@@ -17,9 +17,10 @@ private:
 
     void handleGenerateButtonClick(wxCommandEvent& event);
     void handleSaveButtonClick(wxCommandEvent& event);
+    void pickBgColor(wxCommandEvent& event);
+    void pickFgColor(wxCommandEvent& event);
     void handleUpdateUi(wxUpdateUIEvent& event);
     void handleOnPaint(wxPaintEvent& event);
-
 
     void paintNow();
     void draw(wxDC& dc);
@@ -38,6 +39,11 @@ private:
     ImageIdentity whichImageShouldUse() const;
 
     void saveDiffToFile(const wxString& path) const;
+
+    struct {
+        wxColour bg{*wxBLACK};
+        wxColour fg{*wxRED};
+    } colors;
 
     wxImage firstImage;
     wxImage secondImage;
