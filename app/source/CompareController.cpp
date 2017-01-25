@@ -266,7 +266,7 @@ wxRect CompareController::fitRectangleToSize(const wxRect& rect, const wxSize& s
         wxPoint{rect.GetLeft() < 0 ? 0 : rect.GetLeft(),
                 rect.GetTop() < 0 ? 0 : rect.GetTop()},
         wxPoint{rect.GetRight() > size.GetWidth() ? size.GetWidth() - 1 : rect.GetRight(),
-                rect.GetBottom() > size.GetHeight() ? size.GetHeight() - 1 : rect.GetHeight()}
+                rect.GetBottom() > size.GetHeight() ? size.GetHeight() - 1 : rect.GetBottom()}
     };
 }
 
