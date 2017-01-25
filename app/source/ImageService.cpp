@@ -133,8 +133,10 @@ void ImageService::setZoom(int zoom)
     if (not isImageLoaded)
         return;
 
-    this->zoom = zoom;
-    scale(zoom);
+    if (zoom > 5) {
+        this->zoom = zoom;
+        scale(zoom);
+    }
 }
 
 void ImageService::makeMaster()
